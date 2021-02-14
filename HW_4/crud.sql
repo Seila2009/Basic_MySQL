@@ -1,9 +1,6 @@
 USE vk_new;
 
-DELETE FROM school_types;
-
 INSERT school_types VALUES
-(1, 'h', 'school №3', 'Omsk'),
 (2, 'c', 'college №67', 'Tomsk'),
 (3, 'u', 'MTI', 'Moscow');
 
@@ -19,7 +16,7 @@ INSERT `vk_new`.`school_types` (`profiles_users_id`, `city`)
 SELECT 24, `Name` FROM world.city WHERE  ID = 6;
 
 INSERT `school_types` SET
-	`profiles_users_id` = 15,
+	`profiles_users_id` = 14,
     `types` = 'c',
     `name` = 'tech college №1585',
     `city` = 'Moscow';	
