@@ -1,25 +1,11 @@
-USE shop
-
--- 1. Пусть в таблице users поля created_at и updated_at оказались незаполненными. Заполните их текущими датой и временем.
-
-UPDATE users SET created_at = NOW() AND updated_at = NOW();
+-- 1. Пусть в таблице users поля created_at и updated_at оказались незаполненными. 
+-- Заполните их текущими датой и временем.
+UPDATE users SET created_at = NOW(), updated_at = NOW();
 
 -- 2.Таблица users была неудачно спроектирована. Записи created_at и updated_at были заданы типом VARCHAR и в них долгое время помещались значения в формате 20.10.2017 8:10. 
 -- Необходимо преобразовать поля к типу DATETIME, сохранив введённые ранее значения.
 
-ALTER TABLE products 
-    CHANGE COLUMN `created_at` `created_at` VARCHAR(256) NULL,
-    CHANGE COLUMN `updated_at` `updated_at` VARCHAR(256) NULL;
-
-describe products;
-SELECT created_at from products;
-
-ALTER TABLE products 
-    CHANGE COLUMN `created_at` `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
-    CHANGE COLUMN `updated_at` `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
-
-describe products;
-SELECT created_at from products;
+SELECT name, DATE_FORMAT(created_at, '%d.%m.%y %h:%i') created_at, DATE_FORMAT(updated_at, '%d.%m.%y %h:%i') updated_at FROM users;
 
 -- В таблице складских запасов storehouses_products в поле value могут встречаться самые разные цифры: 0, если товар закончился и выше нуля, если на складе имеются запасы. 
 -- Необходимо отсортировать записи таким образом, чтобы они выводились в порядке увеличения значения value. 
