@@ -29,14 +29,15 @@ SELECT *, FIELD(`id`, 5, 1, 2) FROM catalogs WHERE id IN (5, 1, 2);
 -- Подсчитайте средний возраст пользователей в таблице users.
 
 SELECT AVG(age) FROM (SELECT YEAR(CURRENT_TIMESTAMP) - YEAR(birthday_at) as age FROM `users`) AS Avg_age;
+
 -- второй вариант
 SELECT AVG(TIMESTAMPDIFF(YEAR, birthday_at, NOW())) FROM `users`;
 
 -- Подсчитайте количество дней рождения, которые приходятся на каждый из дней недели. 
 -- Следует учесть, что необходимы дни недели текущего года, а не года рождения.
 SELECT 
-	DAYNAME(CONCAT(YEAR(NOW()), '-', MONTH(birthday_at), '-', DAY(birthday_at))) AS day_name, 
-    COUNT(*)
-FROM shop.users;
-GROUP BY day_name;
-ORDER BY WEEKDAY(CONCAT(YEAR(NOW()), '-', MONTH(birthday_at), '-', DAY(birthday_at))); 
+	DAYNAME(CONCAT(YEAR(NOW()), '-', MONTH(birthday_at), '-', DAY(birthday_at))) AS day_name,
+	COUNT(*) 
+FROM users 
+GROUP BY day_name, 
+ORDER BY WEEKDAY(CONCAT(YEAR(NOW()), '-', MONTH(birthday_at), '-', DAY(birthday_at)))
