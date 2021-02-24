@@ -1,11 +1,10 @@
--- 1. Пусть в таблице users поля created_at и updated_at оказались незаполненными. 
--- Заполните их текущими датой и временем.
+-- 1. 
 UPDATE users SET created_at = NOW(), updated_at = NOW() WHERE created_at IS NULL OR updated_at IS NULL;
 
 -- 2.Таблица users была неудачно спроектирована. Записи created_at и updated_at были заданы типом VARCHAR и в них долгое время помещались значения в формате 20.10.2017 8:10. 
 -- Необходимо преобразовать поля к типу DATETIME, сохранив введённые ранее значения.
 
-SELECT name, DATE_FORMAT(created_at, '%d.%m.%y %h:%i') created_at, DATE_FORMAT(updated_at, '%d.%m.%y %h:%i') updated_at FROM users;
+UPDATE users SET created_a = STR_TO_DATE(created_at, '%d.%m.%y %h:%i'), updated_at = STR_TO_DATE(updated_at, '%d.%m.%y %h:%i');
 
 -- В таблице складских запасов storehouses_products в поле value могут встречаться самые разные цифры: 0, если товар закончился и выше нуля, если на складе имеются запасы. 
 -- Необходимо отсортировать записи таким образом, чтобы они выводились в порядке увеличения значения value. 
