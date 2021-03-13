@@ -18,26 +18,22 @@ INSERT INTO storehouses_products
 
 SELECT * FROM storehouses_products ORDER BY CASE WHEN value = 0 THEN 9999999999999999999999 ELSE value END;
 
--- (по желанию) Из таблицы users необходимо извлечь пользователей, родившихся в августе и мае. 
--- Месяцы заданы в виде списка английских названий (may, august)
+-- 4. (по желанию) 
 SELECT * FROM users WHERE birthday_at RLIKE '^[0-9]{4}-(05|08)-[0-9]{2}';
 
--- (по желанию)Из таблицы catalogs извлекаются записи при помощи запроса. SELECT * FROM catalogs WHERE id IN (5, 1, 2); 
--- Отсортируйте записи в порядке, заданном в списке IN.
+-- 5. (по желанию)
 SELECT *, FIELD(`id`, 5, 1, 2) FROM catalogs WHERE id IN (5, 1, 2);
 
--- Подсчитайте средний возраст пользователей в таблице users.
-
+-- 1. 
 SELECT AVG(age) FROM (SELECT YEAR(CURRENT_TIMESTAMP) - YEAR(birthday_at) as age FROM `users`) AS Avg_age;
 
 -- второй вариант
 SELECT AVG(TIMESTAMPDIFF(YEAR, birthday_at, NOW())) FROM `users`;
 
--- Подсчитайте количество дней рождения, которые приходятся на каждый из дней недели. 
--- Следует учесть, что необходимы дни недели текущего года, а не года рождения.
+-- 2.
 SELECT 
-	DAYNAME(CONCAT(YEAR(NOW()), '-', MONTH(birthday_at), '-', DAY(birthday_at))) AS day_name,
-	COUNT(*) 
-FROM users 
-GROUP BY day_name, 
-ORDER BY WEEKDAY(CONCAT(YEAR(NOW()), '-', MONTH(birthday_at), '-', DAY(birthday_at)))
+    DAYNAME(CONCAT(YEAR(NOW()), '-', MONTH(birthday), '-', DAY(birthday))) AS day_name,
+    COUNT(*)
+FROM profiles
+GROUP BY day_name
+ORDER BY WEEKDAY(CONCAT(YEAR(NOW()), '-', MONTH(birthday), '-', DAY(birthday)))
