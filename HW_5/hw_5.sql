@@ -37,3 +37,10 @@ SELECT
 FROM profiles
 GROUP BY day_name
 ORDER BY WEEKDAY(CONCAT(YEAR(NOW()), '-', MONTH(birthday), '-', DAY(birthday)))
+
+-- 3. (по желанию) 
+-- Использовала Id в качестве значений, произведение которых нужно найти.
+
+SELECT 
+	exp(SUM(log(id))) product 
+FROM users;
