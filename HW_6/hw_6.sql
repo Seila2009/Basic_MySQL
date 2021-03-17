@@ -1,5 +1,4 @@
--- Пусть задан некоторый пользователь. 
--- Из всех друзей этого пользователя найдите человека, который больше всех общался с нашим пользователем
+-- Задача 1.
 SELECT count(*) messages, friend FROM 
 	(SELECT text, to_users_id AS friend FROM messages WHERE from_users_id = 1
 	 UNION
@@ -7,17 +6,23 @@ SELECT count(*) messages, friend FROM
 
 GROUP BY friend ORDER BY messages DESC LIMIT 1;
 
--- Подсчитать общее количество лайков, которые получили 10 самых молодых пользователей.
-SELECT SUM(likes) 
-FROM (SELECT COUNT(*) AS likes FROM likes, profiles WHERE users_id = profiles.users_id 
-GROUP BY users_id ORDER BY profiles.birthday DESC LIMIT 10) as sumlikes;
+-- Задача 2.
+SELECT 
+	SUM(likes) 
+FROM (SELECT 
+			COUNT(*) AS likes
+	  FROM likes, profiles
+	  WHERE likes.users_id = profiles.users_id
+	  GROUP BY likes.users_id
+	  ORDER BY profiles.birthday DESC
+	  LIMIT 10) as countlikes
 
--- Определить кто больше поставил лайков (всего) - мужчины или женщины?
+-- Задача 3.
 SELECT COUNT(*) AS likes, gender FROM likes, profiles
 WHERE likes.users_id = profiles.users_id
 GROUP BY gender;
 
--- Найти 10 пользователей, которые проявляют наименьшую активность в использовании социальной сети.
+-- Задача 4.
 
 SELECT users_id, COUNT(*) AS summ_likes
 FROM likes
